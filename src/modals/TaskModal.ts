@@ -103,6 +103,17 @@ export abstract class TaskModal extends Modal {
         this.titleInput.addEventListener('input', (e) => {
             this.title = (e.target as HTMLInputElement).value;
         });
+
+        // Add this keydown event listener for Enter key
+        this.titleInput.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (this.validateForm()) {
+                    await this.handleSave();
+                    this.close();
+                }
+            }
+        });
     }
 
     protected createActionBar(container: HTMLElement): void {
